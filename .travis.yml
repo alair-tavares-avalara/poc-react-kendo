@@ -1,0 +1,27 @@
+language: node_js
+
+os:
+  - 'linux'
+  
+dist: 'trusty'
+
+cache:
+  directories:
+  - node_modules
+
+node_js:
+  - "8"
+
+install:
+  - npm install
+
+script:
+  - yarn run test:CI
+
+after_success:
+  - npm test
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
