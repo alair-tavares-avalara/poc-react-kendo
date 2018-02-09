@@ -1,23 +1,20 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader'
-import './index.css';
 import Root from './Root';
 import configureStore, { history } from './store/configureStore';
 import registerServiceWorker from './registerServiceWorker';
 
 const store = configureStore();
 
-const render = Component => {
-    ReactDOM.render(
-        <AppContainer>
-            <Component />
-        </AppContainer>,
-        document.getElementById('root'),
-    )
-}
+console.log(history);
 
-render(<Root store={store} history={history} />)
+render(
+    <AppContainer>
+        <Root store={store} history={history} />
+    </AppContainer>,
+    document.getElementById('root')
+);
 
 // Webpack Hot Module Replacement API
 if (module.hot) {
