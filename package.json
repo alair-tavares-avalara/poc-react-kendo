@@ -1,0 +1,42 @@
+{
+  "name": "salminus",
+  "version": "0.1.0",
+  "description": "Salminus",
+  "private": true,
+  "author": "Avalara Brazil",
+  "contributors": [
+    "Everton Amorin <everton.amorin@avalara.com>",
+    "Daniel Joppi <daniel.joppi@avalara.com>",
+    "Angelo Melo <angelo.melo@avalara.com>",
+    "Alair Tavares <alair.tavares@avalara.com>"
+  ],
+  "dependencies": {
+    "@progress/kendo-data-query": "^1.1.2",
+    "@progress/kendo-react-dateinputs": "^0.3.0",
+    "@progress/kendo-react-dropdowns": "^0.3.0",
+    "@progress/kendo-react-grid": "^0.3.0",
+    "@progress/kendo-react-inputs": "^0.3.0",
+    "@progress/kendo-react-intl": "^0.3.0",
+    "history": "^4.7.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.7.2",
+    "redux-immutable-state-invariant": "^2.1.0",
+    "redux-thunk": "^2.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom --coverage",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "enzyme": "^3.0.0",
+    "enzyme-adapter-react-16": "^1.0.0",
+    "jest-enzyme": "^4.2.0",
+    "react-scripts": "1.1.0",
+    "react-test-renderer": "^16.2.0"
+  }
+}
