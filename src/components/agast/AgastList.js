@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid, GridToolbar, GridColumn as Column, GridCell } from '@progress/kendo-react-grid';
 import { Button } from '@progress/kendo-react-buttons';
 
@@ -13,6 +14,12 @@ class ScopeCell extends GridCell {
 }
 
 class AgastList extends React.Component {
+    static propTypes = {
+        data: PropTypes.object.isRequired,
+        onPagination: PropTypes.func.isRequired,
+        onFilter: PropTypes.func.isRequired
+    };
+
     constructor(props) {
         super(props);
 
@@ -41,6 +48,10 @@ class AgastList extends React.Component {
 
     componentWillReceiveProps(props) {
         const skip = props.data.page * (props.data.rowsPerPage || 0);
+
+        console.log('skip', skip);
+        console.log('page', props.data.page);
+        console.log('rowperpage', props.data.rowsPerPage);
         this.setState({
             items: props.data.agasts,
             page: props.data.page,
@@ -54,14 +65,14 @@ class AgastList extends React.Component {
 
     pageChange(event) {
         const { skip } = event.page;
-        this.setState({skip});
+        this.setState({ skip });
 
-        const {pageSize} = this.state;
-        this.props.onPagination({skip, pageSize});
+        const { pageSize } = this.state;
+        this.props.onPagination({ skip, pageSize });
     }
 
     filterChange = function (event) {
-        console.log(event.filter);
+        //console.log(event.filter);
     }
 
     updatePagerState(key, value) {
