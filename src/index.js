@@ -7,8 +7,6 @@ import registerServiceWorker from './registerServiceWorker';
 
 const store = configureStore();
 
-console.log(history);
-
 render(
     <AppContainer>
         <Root store={store} history={history} />
