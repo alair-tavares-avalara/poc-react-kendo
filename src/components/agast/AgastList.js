@@ -31,7 +31,7 @@ class AgastList extends React.Component {
             total: 0,
             search: '',
             typeFilter: '',
-            skip: 0,
+            skip: 20,
             pageable: {
                 buttonCount: 5,
                 info: true,
@@ -49,9 +49,6 @@ class AgastList extends React.Component {
     componentWillReceiveProps(props) {
         const skip = props.data.page * (props.data.rowsPerPage || 0);
 
-        console.log('skip', skip);
-        console.log('page', props.data.page);
-        console.log('rowperpage', props.data.rowsPerPage);
         this.setState({
             items: props.data.agasts,
             page: props.data.page,
@@ -65,6 +62,7 @@ class AgastList extends React.Component {
 
     pageChange(event) {
         const { skip } = event.page;
+        console.log(skip, 'skips', event.page);
         this.setState({ skip });
 
         const { pageSize } = this.state;

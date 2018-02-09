@@ -71,7 +71,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "test:cover": "node scripts/test.js --env=jsdom --coverage ",
+    "test:cover": "npm test -- --coverage ",
     "test:cover:CI": "npm run test:cover && cat ./coverage/lcov.info | codecov"
   },
   "devDependencies": {

@@ -11,7 +11,7 @@ const props = {
 };
 
 describe('<AgastList />', () => {
-  xit('should setting props to state', () => {
+  it('should setting props to state', () => {
     const wrapper = mount(
       <AgastList {...props} />
     );
@@ -26,7 +26,7 @@ describe('<AgastList />', () => {
     expect(wrapper.state().total).toEqual(32);
   });
 
-  xit('should display agasts', () => {
+  it('should display agasts', () => {
     const wrapper = mount(
       <AgastList {...props} />
     );
@@ -43,22 +43,54 @@ describe('<AgastList />', () => {
   });
 
   it('should change page', () => {
+    let lines, column;
+
     const wrapper = mount(
       <AgastList {...props} />
     );
 
     wrapper.setProps({ data: reducerDataMock });
 
-    const page = wrapper.find('.k-state-selected');
+    lines = wrapper.find('tbody > tr');
+    column = lines.at(0).find('td');
+    expect(lines.length).toEqual(15);
+    expect(column.at(0).text()).toEqual('Empresa');
+    expect(column.at(1).text()).toEqual('CARTUCHO');
+    expect(column.at(2).text()).toEqual('84439923');
+    expect(column.at(3).text()).toEqual('Reatores nucleares, caldeiras, máquinas, aparelhos e instrumentos mecânicos, e suas partes');
 
     expect(wrapper.state().skip).toEqual(0);
-    expect(page.at(0).text()).toEqual("1");
 
     wrapper.setProps({ data: reducerDataMock2 });
 
-    const page2 = wrapper.find('.k-state-selected');
-
+    lines = wrapper.find('tbody > tr');
+    column = lines.at(0).find('td');
+    expect(lines.length).toEqual(15);
+    expect(column.at(0).text()).toEqual('Empresa');
+    expect(column.at(1).text()).toEqual('FT-SAP');
+    expect(column.at(3).text()).toEqual('Teste SAP');
     expect(wrapper.state().skip).toEqual(10);
-    expect(page2.at(0).text()).toEqual("2");
+  });
+
+  it('should display Agast scope', () => {
+    let lines, column;
+    const reducerDataMockCompany = {"agasts":[{"code":"TESTE0","description":"Teste Company", "companyId":"40cf2158-1540-4af7-ba70-5e5c68bf100f","id":"20ce8f14-86a5-4c76-9f80-9ebe5ff25975"}],"page":0,"rowsPerPage":10,"totalCount":32,"admin":true};
+    const reducerDataMockGlobal = {"agasts":[{"code":"12","description":"Teste Global","id":"fc20344b-75ff-42cc-9281-bdcc71deea16"}],"page":0,"rowsPerPage":10,"totalCount":32,"admin":true};
+
+    const wrapper = mount(
+      <AgastList {...props} />
+    );
+
+    wrapper.setProps({ data: reducerDataMockCompany });
+
+    lines = wrapper.find('tbody > tr');
+    column = lines.at(0).find('td');
+    expect(column.at(0).text()).toEqual('Empresa');
+
+    wrapper.setProps({ data: reducerDataMockGlobal });
+
+    lines = wrapper.find('tbody > tr');
+    column = lines.at(0).find('td');
+    expect(column.at(0).text()).toEqual('Global');
   });
 });
