@@ -65,13 +65,3 @@ export function saveAgast() {
       .catch(ex => dispatch(saveAgastFailure(ex)));
   };
 }
-
-export function calculateFuelSavings(settings, fieldName, value) {
-  return {
-    type: types.CALCULATE_FUEL_SAVINGS,
-    dateModified: getFormattedDateTime(),
-    settings,
-    fieldName,
-    value
-  };
-}
