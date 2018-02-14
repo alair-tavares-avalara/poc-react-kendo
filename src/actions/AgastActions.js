@@ -50,7 +50,7 @@ export function fetchAgast() {
     return fetch(url)
       .then(res => res.json())
       .then(body => dispatch(fetchAgastSuccess(body)))
-      .catch(ex => dispatch(fetchAgastFailure(ex)));
+      .catch(ex => dispatch(fetchAgastFailure(`Error: ${JSON.stringify(ex)}`)));
   };
 }
 

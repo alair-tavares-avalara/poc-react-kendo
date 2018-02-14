@@ -29,4 +29,20 @@ describe('Actions: Agast', () => {
             expect(store.getActions()).toEqual(expectedActions)
         });
     });
+
+    it('creates FETCH_AGAST_FAILURE when fetching Agast has been done', () => {
+        fetchMock
+            .getOnce('http://www.mocky.io/v2/5a6224f2310000122cde7f24', 500);
+
+        const expectedActions = [
+            { type: types.FETCH_AGAST_REQUEST },
+            { type: types.FETCH_AGAST_FAILURE, ex: 'Error: {}' }
+        ];
+        const store = mockStore({});
+
+        return store.dispatch(actions.fetchAgast()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions)
+        });
+    });
 });
