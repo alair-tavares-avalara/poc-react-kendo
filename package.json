@@ -88,6 +88,15 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
     ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 18,
+        "functions": 39,
+        "lines": 38,
+        "statements": 27
+      }
+    },
+    "coverageReporters": ["text"],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
