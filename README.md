@@ -1,7 +1,7 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+# Salminus
 
-Below you will find some information on how to perform common tasks.<br>
-You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+[![Build Status](https://travis-ci.org/alair-tavares-avalara/poc-react-kendo.svg?branch=master)](https://travis-ci.org/alair-tavares-avalara/poc-react-kendo)
+[![codecov](https://codecov.io/gh/alair-tavares-avalara/poc-react-kendo/branch/master/graph/badge.svg)](https://codecov.io/gh/alair-tavares-avalara/poc-react-kendo)
 
 ## Table of Contents
 
