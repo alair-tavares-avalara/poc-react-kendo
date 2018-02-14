@@ -1,7 +1,5 @@
 import * as types from '../constants/actionTypes';
 
-import { getFormattedDateTime } from '../utils/dates';
-
 function fetchAgastRequest() {
   return {
     type: types.FETCH_AGAST_REQUEST
