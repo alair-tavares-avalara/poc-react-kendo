@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as actions from './AgastActions';
-import * as types from '../constants/ActionTypes';
+import * as types from '../constants/actionTypes';
 import fetchMock from 'fetch-mock';
 
 const middlewares = [thunk];
