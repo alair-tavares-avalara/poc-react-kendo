@@ -85,6 +85,7 @@
     "redux-mock-store": "^1.5.1"
   },
   "jest": {
+    "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
     ],
@@ -96,9 +97,6 @@
         "statements": 27
       }
     },
-    "coverageReporters": [
-      "text"
-    ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
