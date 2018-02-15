@@ -5,9 +5,12 @@ import { Button } from '@progress/kendo-react-buttons';
 
 class ScopeCell extends GridCell {
     render() {
+        const { dataItem, field } = this.props;
+        const label = dataItem[field] ? 'Empresa' : 'Global';
+
         return (
             <td>
-                {this.props.dataItem[this.props.field] ? 'Empresa' : 'Global'}
+                {label}
             </td>
         );
     }
@@ -42,7 +45,6 @@ class AgastList extends React.Component {
         };
 
         this.pageChange = this.pageChange.bind(this);
-        this.updatePagerState = this.updatePagerState.bind(this);
         this.filterChange = this.filterChange.bind(this);
     }
 
@@ -61,21 +63,14 @@ class AgastList extends React.Component {
     }
 
     pageChange(event) {
-        const { skip } = event.page;
-        console.log(skip, 'skips', event.page);
-        this.setState({ skip });
+        const { skip, take } = event.page;
+        this.setState({ skip, pageSize: take });
 
-        const { pageSize } = this.state;
-        this.props.onPagination({ skip, pageSize });
+        this.props.onPagination({ skip, pageSize: take });
     }
 
     filterChange = function (event) {
         //console.log(event.filter);
-    }
-
-    updatePagerState(key, value) {
-        const newPageableState = Object.assign({}, this.state.pageable, { [key]: value });
-        this.setState(Object.assign({}, this.state, { pageable: newPageableState }));
     }
 
     render() {

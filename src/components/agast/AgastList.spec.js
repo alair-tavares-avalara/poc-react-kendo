@@ -72,10 +72,31 @@ describe('<AgastList />', () => {
     expect(wrapper.state().skip).toEqual(10);
   });
 
+  it('should change page', () => {
+    const onPagination = jest.fn();
+    const props = {
+      data: initialDataMock,
+      onPagination: onPagination,
+      onFilter: jest.fn()
+    };
+
+    const wrapper = mount(
+      <AgastList {...props} />
+    );
+
+    wrapper.setProps({ data: reducerDataMock });
+
+    const grid = wrapper.find('Grid');
+
+    grid.prop('pageChange')({page: {skip: 20, take: 30}});
+
+    expect(onPagination).toHaveBeenCalled();
+  });
+
   it('should display Agast scope', () => {
     let lines, column;
-    const reducerDataMockCompany = {"agasts":[{"code":"TESTE0","description":"Teste Company", "companyId":"40cf2158-1540-4af7-ba70-5e5c68bf100f","id":"20ce8f14-86a5-4c76-9f80-9ebe5ff25975"}],"page":0,"rowsPerPage":10,"totalCount":32,"admin":true};
-    const reducerDataMockGlobal = {"agasts":[{"code":"12","description":"Teste Global","id":"fc20344b-75ff-42cc-9281-bdcc71deea16"}],"page":0,"rowsPerPage":10,"totalCount":32,"admin":true};
+    const reducerDataMockCompany = { "agasts": [{ "code": "TESTE0", "description": "Teste Company", "companyId": "40cf2158-1540-4af7-ba70-5e5c68bf100f", "id": "20ce8f14-86a5-4c76-9f80-9ebe5ff25975" }], "page": 0, "rowsPerPage": 10, "totalCount": 32, "admin": true };
+    const reducerDataMockGlobal = { "agasts": [{ "code": "12", "description": "Teste Global", "id": "fc20344b-75ff-42cc-9281-bdcc71deea16" }], "page": 0, "rowsPerPage": 10, "totalCount": 32, "admin": true };
 
     const wrapper = mount(
       <AgastList {...props} />

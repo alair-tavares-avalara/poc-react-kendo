@@ -96,7 +96,9 @@
         "statements": 27
       }
     },
-    "coverageReporters": ["text"],
+    "coverageReporters": [
+      "text"
+    ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
