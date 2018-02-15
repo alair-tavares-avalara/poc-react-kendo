@@ -20,7 +20,6 @@ export class AgastListPage extends React.Component {
     }
 
     render() {
-        console.log('a',this.props);
         return (
             <AgastList data={this.props} onPagination={this.handleFilter} onFilter={this.handleFilter} />
         );
