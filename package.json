@@ -18,6 +18,7 @@
     "@progress/kendo-react-grid": "^0.3.0",
     "@progress/kendo-react-inputs": "^0.3.0",
     "@progress/kendo-react-intl": "^0.3.0",
+    "@progress/kendo-react-popup": "^0.3.0",
     "@progress/kendo-theme-bootstrap": "^2.11.5",
     "@progress/kendo-theme-default": "^2.47.7",
     "autoprefixer": "7.1.6",

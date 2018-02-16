@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, GridToolbar, GridColumn as Column, GridCell } from '@progress/kendo-react-grid';
-import { Button } from '@progress/kendo-react-buttons';
 
 class ScopeCell extends GridCell {
     render() {
@@ -20,7 +19,8 @@ class AgastList extends React.Component {
     static propTypes = {
         data: PropTypes.object.isRequired,
         onPagination: PropTypes.func.isRequired,
-        onFilter: PropTypes.func.isRequired
+        onFilter: PropTypes.func.isRequired,
+        buttonNew: PropTypes.object
     };
 
     constructor(props) {
@@ -49,16 +49,18 @@ class AgastList extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        const skip = props.data.page * (props.data.rowsPerPage || 0);
+        const { data, onPagination, onFilter, buttonNew } = props;
+        const skip = data.page * (data.rowsPerPage || 0);
 
         this.setState({
-            items: props.data.agasts,
-            page: props.data.page,
-            pageSize: props.data.rowsPerPage || 0,
-            total: props.data.totalCount || 0,
-            onPagination: props.onPagination,
-            onFilter: props.onFilter,
-            skip: skip
+            items: data.agasts,
+            page: data.page,
+            pageSize: data.rowsPerPage || 0,
+            total: data.totalCount || 0,
+            onPagination,
+            onFilter,
+            buttonNew,
+            skip
         });
     }
 
@@ -74,6 +76,9 @@ class AgastList extends React.Component {
     }
 
     render() {
+        
+        const { buttonNew } = this.props;   
+
         return (
             <div style={{ padding: '20px' }}>
                 <Grid
@@ -85,10 +90,12 @@ class AgastList extends React.Component {
                     pageable={this.state.pageable}
                     pageSize={this.state.pageSize}
                 >
-                    <GridToolbar>
-                        <Button icon="plus" primary={true}>NOVO AGAST</Button>
-                    </GridToolbar>
-
+                    {   
+                        buttonNew &&
+                        <GridToolbar>
+                            {buttonNew}
+                        </GridToolbar>
+                    }
                     <Column field="companyId" title="Escopo" width="100px" cell={ScopeCell} />
                     <Column field="code" title="Código" width="250px" />
                     <Column field="hsCode" title="Classificação Fiscal" width="250px" />

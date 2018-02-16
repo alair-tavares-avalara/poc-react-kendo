@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import agastReducer from './AgastReducer';
+import * as AgastReducers from './AgastReducer';
 
 const rootReducer = combineReducers({
-  agastReducer,
+  agastSaveReducer: AgastReducers.agastSaveReducer,
+  agastReducer: AgastReducers.agastReducer,
   routing: routerReducer
 });
 
