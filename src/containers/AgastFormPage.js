@@ -61,3 +61,5 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(AgastFormPage);
+
+export { AgastFormPage as PureAgastFormPage };
