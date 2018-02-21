@@ -169,18 +169,4 @@ describe('<AgastForm />', () => {
 
         expect(cancelClick).toBeCalled();
     });
-
-    function simulateChangeAll(wrapper, object) {
-        Object.keys(object).forEach(key => simulateChange(wrapper, key, object[key]));
-    }
-
-    function simulateChange(wrapper, inputName, inputValue) {
-        const changeEvent = { target: { name: inputName, value: inputValue } };
-        let input = wrapper.find(`input[name="${inputName}"]`);
-        if (input.length > 1) {
-            input = input.first();
-        }
-
-        return input.simulate('change', changeEvent);
-    }
 });
