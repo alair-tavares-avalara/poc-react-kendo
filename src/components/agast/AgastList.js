@@ -1,22 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, GridToolbar, GridColumn as Column, GridCell } from '@progress/kendo-react-grid';
+import { translate } from '../../locales';
+import { I18n } from 'react-i18next';
 
 class ScopeCell extends GridCell {
     render() {
         const { dataItem, field } = this.props;
         const label = dataItem[field] ? 'Empresa' : 'Global';
-
+        
         return (
-            <td>
-                {label}
-            </td>
+            <I18n ns="common">
+                {
+                    (t, { i18n }) => (
+                        <td>{t(label)}</td>
+                    )
+                }
+            </I18n>
         );
     }
 }
 
 class AgastList extends React.Component {
+    static NAMESPACE_TRANSLATION = 'agast';
     static propTypes = {
+        t: PropTypes.func.isRequired,
         data: PropTypes.object.isRequired,
         onPagination: PropTypes.func.isRequired,
         onFilter: PropTypes.func.isRequired,
@@ -76,8 +84,8 @@ class AgastList extends React.Component {
     }
 
     render() {
-        
-        const { buttonNew } = this.props;   
+
+        const { buttonNew, t } = this.props;
 
         return (
             <div style={{ padding: '20px' }}>
@@ -90,20 +98,21 @@ class AgastList extends React.Component {
                     pageable={this.state.pageable}
                     pageSize={this.state.pageSize}
                 >
-                    {   
+                    {
                         buttonNew &&
                         <GridToolbar>
                             {buttonNew}
                         </GridToolbar>
                     }
-                    <Column field="companyId" title="Escopo" width="100px" cell={ScopeCell} />
-                    <Column field="code" title="Código" width="250px" />
-                    <Column field="hsCode" title="Classificação Fiscal" width="250px" />
-                    <Column field="description" title="Descrição" />
+                    <Column field="companyId" title={t('Escopo')} width="100px" cell={ScopeCell} />
+                    <Column field="code" title={t('Código')} width="250px" />
+                    <Column field="hsCode" title={t('Classificação Fiscal')} width="250px" />
+                    <Column field="description" title={t('Descrição')} />
                 </Grid>
             </div>
         );
     }
 }
 
-export default AgastList;
+export default translate(AgastList, AgastList.NAMESPACE_TRANSLATION); // default export. used in your app.
+export { AgastList as PureAgastList }; // pure component. used in tests

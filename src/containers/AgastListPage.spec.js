@@ -1,6 +1,6 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
-import { AgastListPage } from "./AgastListPage";
+import { PureAgastListPage as AgastListPage } from "./AgastListPage";
 import AgastList from "../components/agast/AgastList";
 import initialState from "../reducers/initialState";
 import { MemoryRouter as Router } from 'react-router-dom';
@@ -13,6 +13,7 @@ describe("<AgastListPage />", () => {
     it("should contain <AgastList />", () => {
         const wrapper = shallow(
             <AgastListPage
+                t={key => key}
                 actions={actions}
                 agasts={initialState.agastList}
             />
@@ -25,6 +26,7 @@ describe("<AgastListPage />", () => {
         const wrapper = mount(
             <Router>
                 <AgastListPage
+                    t={key => key}
                     actions={actions}
                     agasts={initialState.agastList}
                 />

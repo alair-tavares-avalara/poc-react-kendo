@@ -8,6 +8,7 @@ import { agast } from '../../types';
 import PageTitle from '../shared/PageTitle';
 import { SCOPE_GLOBAL, SCOPE_COMPANY } from '../../constants/agastConstants';
 import initialState from '../../reducers/initialState';
+import { translate } from '../../locales';
 
 const style = {
     popup: {
@@ -26,8 +27,11 @@ const style = {
 };
 
 class AgastForm extends React.Component {
+    static NAMESPACE_TRANSLATION = 'agast';
     static propTypes = {
+        t: PropTypes.func.isRequired,
         onSaveClick: PropTypes.func.isRequired,
+        onCancelClick: PropTypes.func.isRequired,
         onChange: PropTypes.func,
         agast: agast.isRequired
     };
@@ -114,7 +118,7 @@ class AgastForm extends React.Component {
         const newAgast = Object.assign({}, agast);
         newAgast.origin = item.code;
         newAgast.info = item.description;
-        //keepOpen - workaround because give error when popup is closed in test mode.
+        //keepOpen - workaround because trigger error when popup is closed in test mode.
         this.setState({ show: !!event.target.keepOpen, agast: newAgast }, () => this.validate());
     };
 
@@ -129,7 +133,9 @@ class AgastForm extends React.Component {
     };
 
     render() {
-        const { agast } = this.state;
+        const { t } = this.props;
+        const { agast, agastList = [] } = this.state;
+
         return (
             <div style={{ padding: '20px' }}>
                 <div className="card">
@@ -145,14 +151,14 @@ class AgastForm extends React.Component {
                                                 this.anchor = button;
                                             }
                                         }}>
-                                            <span>Agast Origem<span className="k-required">*</span></span>
+                                            <span>{t('agast:Agast Origem')}<span className="k-required">*</span></span>
                                             <input name="origin" id="origin" required={true} className="k-textbox" onChange={this.onChangeOrigin} value={agast.origin} />
                                         </label>
                                         <div ref={this.setWrapperRef}>
                                             <Popup anchor={this.anchor} show={this.state.show}>
                                                 <div style={style.popup}>
                                                     {
-                                                        this.state.agastList.map(i => {
+                                                        agastList.map(i => {
                                                             return <div className="agast-item-popup" key={i.code} style={style.popupItem} onClick={this.onClickPopupItem(i)}>{`${i.code} - ${i.description}`}</div>
                                                         })
                                                     }
@@ -162,7 +168,7 @@ class AgastForm extends React.Component {
                                     </div>
                                     <div className="col-md-6 col-xs-12">
                                         <label className="k-form-field">
-                                            <span>Info</span>
+                                            <span>{t('Informações')}</span>
                                             <input name="info" id="info" className="k-textbox" disabled={true} onChange={this.onChange} value={agast.info} />
                                         </label>
                                     </div>
@@ -170,13 +176,13 @@ class AgastForm extends React.Component {
                                 <div className="row">
                                     <div className="col-md-6 col-xs-12">
                                         <label className="k-form-field">
-                                            <span>Código<span className="k-required">*</span></span>
+                                            <span>{t('Código')}<span className="k-required">*</span></span>
                                             <input name="code" id="code" required={true} className="k-textbox" onChange={this.onChange} value={agast.code} />
                                         </label>
                                     </div>
                                     <div className="col-md-6 col-xs-12">
                                         <label className="k-form-field">
-                                            <span>Descrição<span className="k-required">*</span></span>
+                                            <span>{t('Descrição')}<span className="k-required">*</span></span>
                                             <input name="description" id="description" required={true} className="k-textbox" onChange={this.onChange} value={agast.description} />
                                         </label>
                                     </div>
@@ -185,15 +191,15 @@ class AgastForm extends React.Component {
                                 <div className="row">
                                     <div className="col-md-6 col-xs-12">
                                         <div className="k-form-field">
-                                            <span>Escopo<span className="k-required">*</span></span>
+                                            <span>{t('Escopo')}<span className="k-required">*</span></span>
 
                                             <input type="radio" name="scope" id="global" value={SCOPE_GLOBAL}
                                                 className="k-radio" checked={agast.scope === SCOPE_GLOBAL} onChange={this.onChange} />
-                                            <label className="k-radio-label" htmlFor="global">Global</label>
+                                            <label className="k-radio-label" htmlFor="global">{t('Global')}</label>
 
                                             <input type="radio" name="scope" id="company" value={SCOPE_COMPANY}
                                                 className="k-radio" checked={agast.scope === SCOPE_COMPANY} onChange={this.onChange} />
-                                            <label className="k-radio-label" htmlFor="company">Empresa</label>
+                                            <label className="k-radio-label" htmlFor="company">{t('Empresa')}</label>
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-xs-12">
@@ -222,8 +228,10 @@ class AgastForm extends React.Component {
                             </fieldset>
 
                             <div className="text-right">
-                                <button id="cancelButton" name="cancelButton" type="button" className="k-button">Cancelar</button> &nbsp;
-                                <button id="saveButton" name="saveButton" type="button" disabled={this.state.formIsInvalid} className="k-button k-primary" onClick={() => this.props.onSaveClick(agast)}>Salvar</button>
+                                <button id="cancelButton" name="cancelButton" type="button" className="k-button" onClick={this.props.onCancelClick}>{t('Cancelar')}</button> &nbsp;
+                                <button id="saveButton" name="saveButton" type="button" disabled={this.state.formIsInvalid} className="k-button k-primary" onClick={() => this.props.onSaveClick(agast)}>
+                                    {t('Salvar')}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -233,4 +241,5 @@ class AgastForm extends React.Component {
     }
 }
 
-export default AgastForm;
+export default translate(AgastForm, AgastForm.NAMESPACE_TRANSLATION); // default export. used in your app.
+export { AgastForm as PureAgastForm }; // pure component. used in tests
