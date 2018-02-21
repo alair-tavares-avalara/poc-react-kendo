@@ -27,7 +27,7 @@ const style = {
 };
 
 class AgastForm extends React.Component {
-    static NAMESPACE_TRANSLATE = 'agast';
+    static NAMESPACE_TRANSLATION = 'agast';
     static propTypes = {
         t: PropTypes.func.isRequired,
         onSaveClick: PropTypes.func.isRequired,
@@ -241,5 +241,5 @@ class AgastForm extends React.Component {
     }
 }
 
-export default translate(AgastForm, AgastForm.NAMESPACE_TRANSLATE); // default export. used in your app.
+export default translate(AgastForm, AgastForm.NAMESPACE_TRANSLATION); // default export. used in your app.
 export { AgastForm as PureAgastForm }; // pure component. used in tests
