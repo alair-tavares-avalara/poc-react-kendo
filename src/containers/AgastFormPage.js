@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions/AgastActions';
 import AgastForm from '../components/agast/AgastForm';
+import initialState from '../reducers/initialState';
 
 export class AgastFormPage extends React.Component {
     static HTTP_SUCCESS_CODE = 200;
@@ -14,17 +15,8 @@ export class AgastFormPage extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log(actions);
-
         this.state = {
-            agast: {
-                origin: '',
-                info: '',
-                code: '',
-                description: '',
-                scope: AgastForm.SCOPE_COMPANY,
-                company: ''
-            }
+            agast: initialState.agast
         };
 
         this.save = this.save.bind(this);

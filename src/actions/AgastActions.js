@@ -32,19 +32,9 @@ export function fetchListAgast(searchText) {
 }
 
 export function saveAgast(body) {
-    const url = 'http://www.mocky.io/v2/5a6224f2310000122cde7f24';
-
     return dispatch => {
         dispatch(saveAgastRequest());
-        return fetch(url, {
-            body: JSON.stringify(body),
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'content-type': 'application/json'
-            }
-        })
-            .then((res, a) => ({ status: res.status, body: res.json() }))
+        return AgastAPI.post(JSON.stringify(body))
             .then(body => dispatch(saveAgastSuccess(body)))
             .catch(ex => dispatch(saveAgastFailure(`Error: ${JSON.stringify(ex)}`)));
     };

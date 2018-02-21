@@ -1,13 +1,13 @@
 import { formatParams } from '../utils/url';
 
 class AgastAPI {
-    static requestHeaders = () => ({ 'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`});
+    //${sessionStorage.jwt}
+    static requestHeaders = () => ({ 'AUTHORIZATION': `Bearer ToBeDefined`});
 
     static query(filters) {
-        let url = `${process.env.REACT_APP_AGAST_MOCK_API_URL}/5a6224f2310000122cde7f24?${formatParams(filters)}`;
-
+        const apiUrl = `${process.env.REACT_APP_AGAST_MOCK_API_URL}/5a6224f2310000122cde7f24?${formatParams(filters)}`;
         const headers = this.requestHeaders();
-        const request = new Request(url, {
+        const request = new Request(apiUrl, {
             method: 'GET',
             headers: headers
         });
@@ -36,19 +36,20 @@ class AgastAPI {
         return AgastAPI.fetchJson(request);
     }
 
-    static post(deputy) {
+    static post(agast) {
         const headers = Object.assign({ 'Content-Type': 'application/json' }, this.requestHeaders());
-        const request = new Request(`${process.env.REACT_APP_AGAST_MOCK_API_URL}/5a6224f2310000122cde7f24`, {
+        const apiUrl = `${process.env.REACT_APP_AGAST_MOCK_API_URL}/5a6224f2310000122cde7f24`;
+        const request = new Request(apiUrl, {
             method: 'POST',
             headers: headers,
-            body: JSON.stringify(deputy)
+            body: JSON.stringify(agast)
         });
 
-        return AgastAPI.fetchJson(request);
+        return AgastAPI.fetchPostJson(request);
     }
 
     static list(searchText) {
-        let url = `${process.env.REACT_APP_AGAST_MOCK_API_URL}/5a871f053200004d00f4e8e4?text=${searchText || 'brn'}`;
+        let url = `${process.env.REACT_APP_AGAST_MOCK_API_URL}/5a871f053200004d00f4e8e4?text=${searchText || ''}`;
 
         const headers = this.requestHeaders();
         const request = new Request(url, {
@@ -60,7 +61,11 @@ class AgastAPI {
     }
 
     static fetchJson(request) {
-        return fetch(request).then(response => response.json()).catch(error => error);
+        return fetch(request).then(response => response.json());
+    }
+
+    static fetchPostJson(request) {
+        return fetch(request).then(response => ({ status: response.status, data: response.json()}));
     }
 }
 

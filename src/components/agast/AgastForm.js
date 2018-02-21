@@ -6,6 +6,8 @@ import { Popup } from '@progress/kendo-react-popup';
 import { filterBy } from '@progress/kendo-data-query';
 import { agast } from '../../types';
 import PageTitle from '../shared/PageTitle';
+import { SCOPE_GLOBAL, SCOPE_COMPANY } from '../../constants/agastConstants';
+import initialState from '../../reducers/initialState';
 
 const style = {
     popup: {
@@ -17,15 +19,16 @@ const style = {
     popupItem: {
         padding: '5px',
         cursor: 'pointer'
+    },
+    companyDropDown: {
+        width: '100%'
     }
 };
 
 class AgastForm extends React.Component {
-    static SCOPE_GLOBAL = 'global';
-    static SCOPE_COMPANY = 'company';
-
     static propTypes = {
         onSaveClick: PropTypes.func.isRequired,
+        onChange: PropTypes.func,
         agast: agast.isRequired
     };
 
@@ -42,14 +45,7 @@ class AgastForm extends React.Component {
             show: false,
             showInitially: false,
             agastList: [],
-            agast: {
-                origin: '',
-                info: '',
-                code: '',
-                description: '',
-                scope: AgastForm.SCOPE_COMPANY,
-                company: ''
-            }
+            agast: initialState.agast
         };
 
         this.onChange = this.onChange.bind(this);
@@ -82,9 +78,7 @@ class AgastForm extends React.Component {
 
     filterData(filter) {
         const data = this.companies.slice();
-        const a = filterBy(data, filter);
-        console.log(a, 'safdsa');
-        return a;
+        return filterBy(data, filter);
     }
 
     setWrapperRef(node) {
@@ -103,7 +97,10 @@ class AgastForm extends React.Component {
         const { agast } = this.state;
         const newAgast = Object.assign({}, agast);
         newAgast[fieldName] = value;
-        this.setState({ agast: newAgast }, () => this.validate());
+        this.setState({ agast: newAgast }, () => {
+            this.validate();
+            this.props.onChange && this.props.onChange(event);
+        });
     };
 
     onChangeOrigin = (event) => {
@@ -117,8 +114,8 @@ class AgastForm extends React.Component {
         const newAgast = Object.assign({}, agast);
         newAgast.origin = item.code;
         newAgast.info = item.description;
-
-        this.setState({ show: false, agast: newAgast }, () => this.validate());
+        //keepOpen - workaround because give error when popup is closed in test mode.
+        this.setState({ show: !!event.target.keepOpen, agast: newAgast }, () => this.validate());
     };
 
     validate = () => {
@@ -156,7 +153,7 @@ class AgastForm extends React.Component {
                                                 <div style={style.popup}>
                                                     {
                                                         this.state.agastList.map(i => {
-                                                            return <div key={i.code} style={style.popupItem} onClick={this.onClickPopupItem(i)}>{`${i.code} - ${i.description}`}</div>
+                                                            return <div className="agast-item-popup" key={i.code} style={style.popupItem} onClick={this.onClickPopupItem(i)}>{`${i.code} - ${i.description}`}</div>
                                                         })
                                                     }
                                                 </div>
@@ -190,22 +187,23 @@ class AgastForm extends React.Component {
                                         <div className="k-form-field">
                                             <span>Escopo<span className="k-required">*</span></span>
 
-                                            <input type="radio" name="scope" id="global" value={AgastForm.SCOPE_GLOBAL}
-                                                className="k-radio" checked={agast.scope === AgastForm.SCOPE_GLOBAL} onChange={this.onChange} />
+                                            <input type="radio" name="scope" id="global" value={SCOPE_GLOBAL}
+                                                className="k-radio" checked={agast.scope === SCOPE_GLOBAL} onChange={this.onChange} />
                                             <label className="k-radio-label" htmlFor="global">Global</label>
 
-                                            <input type="radio" name="scope" id="company" value={AgastForm.SCOPE_COMPANY}
-                                                className="k-radio" checked={agast.scope === AgastForm.SCOPE_COMPANY} onChange={this.onChange} />
+                                            <input type="radio" name="scope" id="company" value={SCOPE_COMPANY}
+                                                className="k-radio" checked={agast.scope === SCOPE_COMPANY} onChange={this.onChange} />
                                             <label className="k-radio-label" htmlFor="company">Empresa</label>
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-xs-12">
                                         {
-                                            agast.scope === AgastForm.SCOPE_COMPANY &&
+                                            agast.scope === SCOPE_COMPANY &&
                                             <label className="k-form-field">
                                                 <span>Empresa<span className="k-required">*</span></span>
-                                                <input name="company" type="hidden" required={true} id="company" className="k-textbox" onChange={this.onChange} value={agast.company} />
+                                                <input name="company" type="hidden" required={true} id="company" onChange={this.onChange} value={agast.company} />
                                                 <DropDownList
+                                                    style={style.companyDropDown}
                                                     name={'company'}
                                                     required={true}
                                                     data={this.state.companies}
@@ -224,8 +222,8 @@ class AgastForm extends React.Component {
                             </fieldset>
 
                             <div className="text-right">
-                                <button type="button" className="k-button">Cancelar</button> &nbsp;
-                                <button type="button" disabled={this.state.formIsInvalid} className="k-button k-primary" onClick={() => this.props.onSaveClick(agast)}>Salvar</button>
+                                <button id="cancelButton" name="cancelButton" type="button" className="k-button">Cancelar</button> &nbsp;
+                                <button id="saveButton" name="saveButton" type="button" disabled={this.state.formIsInvalid} className="k-button k-primary" onClick={() => this.props.onSaveClick(agast)}>Salvar</button>
                             </div>
                         </form>
                     </div>

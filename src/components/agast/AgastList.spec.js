@@ -20,7 +20,7 @@ describe('<AgastList />', () => {
 
     wrapper.setProps({ data: reducerDataMock });
 
-    expect(wrapper.props().data.agasts.length).toEqual(0);
+    expect(wrapper.props().data.agasts.length).toEqual(15);
     expect(wrapper.state().items.length).toEqual(15);
     expect(wrapper.state().pageSize).toEqual(10);
     expect(wrapper.state().total).toEqual(32);

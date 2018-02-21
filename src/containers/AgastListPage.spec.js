@@ -3,6 +3,7 @@ import { mount, shallow } from "enzyme";
 import { AgastListPage } from "./AgastListPage";
 import AgastList from "../components/agast/AgastList";
 import initialState from "../reducers/initialState";
+import { MemoryRouter as Router } from 'react-router-dom';
 
 describe("<AgastListPage />", () => {
     const actions = {
@@ -22,10 +23,12 @@ describe("<AgastListPage />", () => {
 
     it("calls handleFilter upon changing a page", () => {
         const wrapper = mount(
-            <AgastListPage
-                actions={actions}
-                agasts={initialState.agastList}
-            />
+            <Router>
+                <AgastListPage
+                    actions={actions}
+                    agasts={initialState.agastList}
+                />
+            </Router>
         );
         const name = "itemsPerPage";
         const value = 40;
