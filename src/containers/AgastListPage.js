@@ -5,10 +5,18 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../actions/AgastActions';
 import AgastList from '../components/agast/AgastList';
 import { Button } from '@progress/kendo-react-buttons';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { translate } from '../locales';
+
+const style = {
+    newButton: {
+        textTransform: 'uppercase'
+    }
+};
 
 export class AgastListPage extends React.Component {
     static propTypes = {
+        t: PropTypes.func.isRequired,
         actions: PropTypes.object.isRequired
     }
 
@@ -27,14 +35,15 @@ export class AgastListPage extends React.Component {
     }
 
     render() {
+        const { t } = this.props;
         const ButtonNew = withRouter(({ history }) => (
-            <Button icon="plus" primary={true} onClick={() => { history.push('/agast-form') }}>
-                NOVO AGAST
+            <Button icon="plus" style={style.newButton} primary={true} onClick={() => history.push('/agast-form') }>
+                {t('Novo Agast')}
             </Button>
         ));
 
         return (
-            <AgastList data={this.props} onPagination={this.handleFilter} onFilter={this.handleFilter} buttonNew={<ButtonNew/>} />
+            <AgastList t={t} data={this.props} onPagination={this.handleFilter} onFilter={this.handleFilter} buttonNew={<ButtonNew/>} />
         );
     }
 }
@@ -52,4 +61,6 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AgastListPage);
+)(translate(AgastListPage));
+
+export { AgastListPage as PureAgastListPage };

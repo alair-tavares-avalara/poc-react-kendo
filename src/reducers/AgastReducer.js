@@ -17,6 +17,14 @@ export function agastReducer(state = initialState.agastList, action) {
                 rowsPerPage: Number(action.body.pageSize || 0)
             };
 
+        default:
+            return state;
+    }
+}
+
+export function agastListReducer(state = [], action) {
+    switch (action.type) {
+
         case FETCH_LIST_AGAST_SUCCESS:
             return action.body;
 

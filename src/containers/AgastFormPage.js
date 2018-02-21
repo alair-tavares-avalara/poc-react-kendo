@@ -30,6 +30,10 @@ export class AgastFormPage extends React.Component {
         this.props.actions.saveAgast(agast);
     }
 
+    cancel = (agast) => {
+        this.props.history.goBack();
+    }
+
     render() {
         return (
             <div>
@@ -41,6 +45,7 @@ export class AgastFormPage extends React.Component {
                         <AgastForm
                             agastList={this.props.agasts}
                             onSaveClick={this.save}
+                            onCancelClick={this.cancel}
                             agast={this.state.agast}
                         />
                 }
@@ -49,7 +54,7 @@ export class AgastFormPage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({ agasts: state.agastReducer, saveAgast: state.agastSaveReducer });
+const mapStateToProps = (state) => ({ agasts: state.agastListReducer, saveAgast: state.agastSaveReducer });
 const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators(actions, dispatch) });
 
 export default connect(
